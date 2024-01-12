@@ -182,7 +182,7 @@ class ResourceManagerMetricCollector(MetricCollector):
             nms = set()
             live_nm_list = yaml.safe_load(bean['LiveNodeManagers'])
             for j in range(len(live_nm_list)):
-                nms.add("http://"+live_nm_list[j]["NodeHTTPAddress"]+"/jmx")
+                nms.add("https://"+live_nm_list[j]["NodeHTTPAddress"]+"/jmx")
                 host = live_nm_list[j]['HostName']
                 version = live_nm_list[j]['NodeManagerVersion']
                 rack = live_nm_list[j]['Rack']
@@ -247,7 +247,7 @@ class ResourceManagerMetricCollector(MetricCollector):
         for i in range(len(beans)):
             if 'RMNMInfo' in beans[i]['name']:
                 self.get_rmnminfo_metrics(beans[i])
-            if 'QueueMetrics' in beans[i]['name'] and re.match(self.queue_regexp, beans[i]['tag.Queue']):
+            if 'QueueMetrics' in beans[i]['name'] and 'PartitionQueueMetrics' not in beans[i]['name'] and re.match(self.queue_regexp, beans[i]['tag.Queue']):
                 self.get_queue_metrics(beans[i])
             if 'ClusterMetrics' in beans[i]['name']:
                 self.get_cluster_metrics(beans[i])
