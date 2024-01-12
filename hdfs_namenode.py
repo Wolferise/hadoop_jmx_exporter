@@ -398,7 +398,7 @@ class NameNodeMetricCollector(MetricCollector):
                              "used", "remaining", "blockScheduled", "blockPoolUsed", "blockPoolUsedPercent", "volfails"]
                     dns_ip, dns_port = info["infoSecureAddr"].split(":")
                     dns_hostname = socket.gethostbyaddr(dns_ip)[0]
-                    dns.add("http://"+dns_hostname+":"+dns_port+"/jmx")
+                    dns.add("https://"+dns_hostname+":"+dns_port+"/jmx")
                     for item in items:
                         value = info[item] if item in info else 0
                         if item == "adminState":
