@@ -396,7 +396,7 @@ class NameNodeMetricCollector(MetricCollector):
                     label = [self.cluster, node, info["infoAddr"], info["infoSecureAddr"], info["xferaddr"], info["version"], self.target]
                     items = ["lastContact", "usedSpace", "adminState", "nonDfsUsedSpace", "capacity", "numBlocks",
                              "used", "remaining", "blockScheduled", "blockPoolUsed", "blockPoolUsedPercent", "volfails"]
-                    dns_ip, dns_port = info[infoSecureAddr].split(":")
+                    dns_ip, dns_port = info["infoSecureAddr"].split(":")
                     dns_hostname = socket.gethostbyaddr(dns_ip)[0]
                     dns.add("http://"+dns_hostname+":"+dns_port+"/jmx")
                     for item in items:
