@@ -34,7 +34,7 @@ def main():
     host = args.host
     port = int(args.port)
     start_http_server(port, host)
-    print "Listen at %s:%s" % (host, port)
+    print("Listen at", str(host) + ":" + str(port))
     register_prometheus(args.cluster, args)
     while True:
         time.sleep(300)
