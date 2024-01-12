@@ -9,6 +9,7 @@ from prometheus_client.core import GaugeMetricFamily
 from utils import get_module_logger
 from common import MetricCollector, CommonMetricCollector
 from scraper import ScrapeMetrics
+import socket
 
 logger = get_module_logger(__name__)
 
@@ -395,7 +396,9 @@ class NameNodeMetricCollector(MetricCollector):
                     label = [self.cluster, node, info["infoAddr"], info["infoSecureAddr"], info["xferaddr"], info["version"], self.target]
                     items = ["lastContact", "usedSpace", "adminState", "nonDfsUsedSpace", "capacity", "numBlocks",
                              "used", "remaining", "blockScheduled", "blockPoolUsed", "blockPoolUsedPercent", "volfails"]
-                    dns.add("http://"+info["infoAddr"]+"/jmx")
+                    dns_ip, dns_port = info[infoSecureAddr].split(":")
+                    dns_hostname = socket.gethostbyaddr(dns_ip)[0]
+                    dns.add("http://"+dns_hostname+":"+dns_port+"/jmx")
                     for item in items:
                         value = info[item] if item in info else 0
                         if item == "adminState":
