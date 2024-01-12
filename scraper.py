@@ -22,6 +22,7 @@ class Scraper(threading.Thread):
         try:
             s = requests.session()
             response = s.get(self.url, timeout=5)
+            logger.info(f"Successfully connected to {self.url}")
         except Exception as e:
             logger.warning("Get {0} failed, error: {1}.".format(self.url, str(e)))
         else:
